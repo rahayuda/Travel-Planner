@@ -1,0 +1,5 @@
+[
+    { "temperature": 30, "windspeed": 10, "weatherCode": 1, "label": 1 },
+    { "temperature": 25, "windspeed": 20, "weatherCode": 2, "label": 1 },
+    { "temperature": 20, "windspeed": 25, "weatherCode": 3, "label": 0 }
+]
