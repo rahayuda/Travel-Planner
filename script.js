@@ -1,6 +1,6 @@
 // Mengambil data cuaca dari API
 async function getWeatherData() {
-    const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-8.7255&longitude=115.1699&current_weather=true');
+    const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-8.7996&longitude=115.1711&current_weather=true');
     const data = await response.json();
     return data.current_weather;
 }
