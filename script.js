@@ -45,22 +45,26 @@ function getWeatherDescription(weatherCode) {
 
 // Melakukan prediksi menggunakan model
 async function makePrediction(model, weatherData) {
-    const temperature = weatherData.temperature; // Suhu
-    const windspeed = weatherData.windspeed; // Kecepatan angin
-    const weatherCode = weatherData.weathercode; // Kode cuaca
+    const temperature = weatherData.temperature || 0; // Default ke 0 jika undefined
+    const windspeed = weatherData.windspeed || 0;
+    const weatherCode = weatherData.weathercode || 0;
 
-    const inputData = tf.tensor2d([[temperature, windspeed, weatherCode]], [1, 3]);
+    // Normalisasi data
+    const inputData = tf.tensor2d([[temperature / 50, windspeed / 100, weatherCode / 100]], [1, 3]);
+    
     const prediction = model.predict(inputData);
-    const result = await prediction.data();
+    const result = await prediction.data(); // Ambil nilai dari tensor
 
-    // Mendapatkan deskripsi cuaca berdasarkan kode cuaca
+    if (isNaN(result[0])) {
+        console.error("Prediction result is NaN. Check input data and model training.");
+    }
+
     const weatherDescription = getWeatherDescription(weatherCode);
 
-    // Menampilkan informasi cuaca
-    document.getElementById('weatherInfo').innerText = `Temperature: ${temperature}°C\nWindspeed: ${windspeed} km/h\nWeather Condition: ${weatherDescription}`;
-
-    // Menampilkan hasil prediksi
-    document.getElementById('result').innerText = `Prediction: ${result[0] > 0.4 ? 'Safe to travel' : 'Not safe to travel'}\nPrediction Value: ${result[0].toFixed(4)}`;
+    document.getElementById('weatherInfo').innerText = 
+        `Temperature: ${temperature}°C\nWindspeed: ${windspeed} km/h\nWeather Condition: ${weatherDescription}`;
+    document.getElementById('result').innerText = 
+        `Prediction: ${result[0] > 0.5 ? 'Safe to travel' : 'Not safe to travel'}\nPrediction Value: ${result[0]?.toFixed(4) || 'NaN'}`;
 }
 
 // Menambahkan event listener untuk tombol prediksi
