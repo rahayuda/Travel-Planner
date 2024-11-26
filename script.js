@@ -28,18 +28,41 @@ async function trainModel(model) {
 
 // Mendapatkan deskripsi cuaca berdasarkan kode cuaca
 function getWeatherDescription(weatherCode) {
-    switch (weatherCode) {
-        case 0: return "Clear sky";
-        case 1: return "Mainly clear";
-        case 2: return "Partly cloudy"; // Menambahkan deskripsi cuaca
-        case 3: return "Overcast";
-        case 45: return "Fog";
-        case 51: return "Light rain";
-        case 61: return "Moderate rain";
-        case 71: return "Heavy rain";
-        case 80: return "Snow showers";
-        case 95: return "Thunderstorms";
-        default: return "Unknown weather condition";
+    // Clear
+    if (weatherCode === 0 || weatherCode === 100) {
+        return "Clear";
+    }
+    // Cloudy
+    else if ((weatherCode >= 1 && weatherCode <= 3) || (weatherCode >= 101 && weatherCode <= 103)) {
+        return "Cloudy";
+    }
+    // Fog/Haze/Smoke
+    else if (weatherCode === 5 || weatherCode === 6 || (weatherCode >= 10 && weatherCode <= 12) || 
+             (weatherCode >= 40 && weatherCode <= 50) || (weatherCode >= 130 && weatherCode <= 136)) {
+        return "Fog/Haze/Smoke";
+    }
+    // Rain
+    else if ((weatherCode >= 20 && weatherCode <= 29) || (weatherCode >= 50 && weatherCode <= 70) || 
+             (weatherCode >= 120 && weatherCode <= 130) || (weatherCode >= 140 && weatherCode <= 150) || 
+             (weatherCode >= 160 && weatherCode <= 170)) {
+        return "Rain";
+    }
+    // Snow
+    else if ((weatherCode >= 70 && weatherCode <= 80) || (weatherCode >= 170 && weatherCode <= 180)) {
+        return "Snow";
+    }
+    // Thunderstorm
+    else if (weatherCode === 17 || weatherCode === 29 || (weatherCode >= 95 && weatherCode < 100) || 
+             (weatherCode >= 190 && weatherCode < 200)) {
+        return "Thunderstorm";
+    }
+    // Dust/Sandstorm
+    else if (weatherCode === 7 || weatherCode === 8 || weatherCode === 9 || (weatherCode >= 30 && weatherCode < 40)) {
+        return "Dust/Sandstorm";
+    }
+    // Other
+    else {
+        return "Other";
     }
 }
 
