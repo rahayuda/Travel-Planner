@@ -60,7 +60,7 @@ async function makePrediction(model, weatherData) {
     document.getElementById('weatherInfo').innerText = `Temperature: ${temperature}°C\nWindspeed: ${windspeed} km/h\nWeather Condition: ${weatherDescription}`;
 
     // Menampilkan hasil prediksi
-    document.getElementById('result').innerText = `Prediction: ${result[0] > 0.4 ? 'Safe to travel' : 'Not safe to travel'}`;
+    document.getElementById('result').innerText = `Prediction: ${result[0] > 0.4 ? 'Safe to travel' : 'Not safe to travel'}\nPrediction Value: ${result[0].toFixed(4)}`;
 }
 
 // Menambahkan event listener untuk tombol prediksi
